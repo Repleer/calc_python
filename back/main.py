@@ -1,6 +1,15 @@
-import requests
 
-back_url = "http://127.0.0.1:5000"
+from flask import Flask,render_template
+
+# from back import main
+app = Flask(__name__)
+
+@app.route('/calc',methods=['Post'])
+def home():
+    return render_template('calc.html')
+if __name__ == '__main__':
+    app.run(debug=True)
+
 input_field = ""
 
 

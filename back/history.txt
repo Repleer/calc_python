@@ -1,3 +1,9 @@
 
 Was used minus and result is 2
 Was used divide and result is 2.0
+
+
+
+
+connecte main.py with flask
+added app.py which handles the connection with front

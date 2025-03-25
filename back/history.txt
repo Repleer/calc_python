@@ -7,3 +7,39 @@ Was used divide and result is 2.0
 
 connecte main.py with flask
 added app.py which handles the connection with front
+Was used add and result is 6
+Was used add and result is 6
+add used, result: 5.0
+add used, result: 11.0
+multiply used, result: 6.0
+multiply used, result: 6.0
+add used, result: 10.0
+add used, result: 92.0
+add used, result: 15.3
+add used, result: 10.0
+add used, result: 16.0
+add used, result: 14.0
+add used, result: 6.0
+add used, result: 16.0
+add used, result: 14.0
+add used, result: 16.0
+add used, result: 14.0
+add used, result: 17.0
+add used, result: 8.0
+add used, result: 8.0
+add used, result: 15.0
+add used, result: 16.0
+add used, result: 14.0
+add used, result: 16.0
+add used, result: 8.0
+add used, result: 3.0
+add used, result: 10.0
+add used, result: 1.0
+add used, result: 4.0
+add used, result: 14.0
+add used, result: 20.0
+divide used, result: 1.1428571428571428
+multiply used, result: 10.285714285714285
+add used, result: 16.0
+add used, result: 22.0
+multiply used, result: 72.0

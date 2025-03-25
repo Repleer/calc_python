@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
+    
+    <title>Calc</title>
+</head>
+<body>
+    
+    <div class="calc">
+        <div class="res" id="res">
+            <input type="text" id="display" name="input" class="inp" readonly>
+           
+        </div>
+        <button class="btn" onclick="Clear()">C</button>
+        <button class="btn" onclick="SetOperator('/')">/</button>
+        <button class="btn" onclick="SetOperator('x')">X</button>
+        <button class="btn" onclick="SetOperator('-')">-</button>
+        <button class="btn" onclick="SetNumber(7)">7</button>
+        <button class="btn" onclick="SetNumber(8)">8</button>
+        <button class="btn" onclick="SetNumber(9)">9</button>
+        <button class="btn" onclick="SetOperator('+')">+</button>
+        <button class="btn" onclick="SetNumber(4)">4</button>
+        <button class="btn" onclick="SetNumber(5)">5</button>
+        <button class="btn" onclick="SetNumber(6)">6</button>
+        <button class="btn" onclick="calculate()">=</button>
+        <button class="btn" onclick="SetNumber(1)">1</button>
+        <button class="btn" onclick="SetNumber(2)">2</button>
+        <button class="btn" onclick="SetNumber(3)">3</button>
+        <button class="btn" onclick="SetNumber('.')">.</button>
+        <button class="btn" onclick="SetNumber(0)">0</button>
+        
+    </div>
+</body>
+<script>
+ let num1 = ""
+ let num2 = ""
+ let operator = ""
+ function SetNumber(num){
+    let display = document.getElementById("display")
+    if(operator === ""){
+        num1 += num
+        display.value += num 
+    }
+    else{
+        num2 += num
+        display.value = num1 + operator +" "+ num2 
+    }
+    
+ }
+ function SetOperator(oper){
+    
+    if(num1 === "" || operator != ""){
+        if(operator != "."){
+
+            return;
+        }
+    }
+    
+        operator = oper
+    document.getElementById("display").value = num1 + operator;
+ }
+ function Clear(){
+    num1 = ""
+    num2 = ""
+    operator = ""
+    document.getElementById("display").value = ""
+ }
+ function calculate() {
+    // Check if num1, num2, and operator are not empty
+    if (num1 !== "" && num2 !== "" && operator !== "") {
+        // Send a POST request to the Flask backend
+        fetch("/", {
+            method: "POST",
+            
+            body: new URLSearchParams({
+                num1: num1,
+                num2: num2,
+                operation: operator
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+
+            Clear()
+            let expression = data.result
+            let result = expression.split("=".trim())[1]
+            num1 = result
+            document.getElementById("display").value = result
+            
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        alert("Please fill in both numbers and choose an operator.");
+    }
+}
+
+</script>
+</html>

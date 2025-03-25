@@ -1,54 +1,56 @@
+from flask import Flask, render_template, request,jsonify
 
-from flask import Flask,render_template
+app = Flask(__name__, template_folder="templates", static_folder="static")
+app.config["DEBUG"] = True
 
-# from back import main
-app = Flask(__name__)
 
-@app.route('/calc',methods=['Post'])
+@app.route("/", methods=["GET", "POST"])
 def home():
-    return render_template('calc.html')
-if __name__ == '__main__':
-    app.run(debug=True)
+    result = None
 
-input_field = ""
+    if request.method == "POST":
+        
+            num1 = float(request.form["num1"])
+            num2 = float(request.form["num2"])
+            operator = request.form["operation"]
+            if operator == "+":
+                result = add(num1,num2)
+            elif operator == "-":
+                result = minus(num1,num2)
+            elif operator == "x":
+                result = multiply(num1,num2)
+            elif operator == "/":
+                result = divide(num1,num2)
+            else:
+                result = "invalid ti invalid"
 
-
-
-def add(a,b):
+            return jsonify({"result": result})
+    return render_template("calc.html")
+def add(a, b):
     res = a + b
-    append_to_file(add.__name__, res)
+    append_to_file("add", res)
     return f"{a} + {b} = {res}"
 
-def minus(a,b):
+def minus(a, b):
     res = a - b
-    append_to_file(minus.__name__, res)
+    append_to_file("minus", res)
     return f"{a} - {b} = {res}"
 
 def divide(a, b):
-    try:
-        if b == 0:
-            raise ZeroDivisionError("U can't divide by zero")
-        else :
-            res = a / b
-            append_to_file(divide.__name__, res)
-            return f"{a} / {b} = {res}"
-    except ZeroDivisionError as e:
-        return e
+    if b == 0:
+        return "Error: Cannot divide by zero"
+    res = a / b
+    append_to_file("divide", res)
+    return f"{a} / {b} = {res}"
 
-
-def multiply(a,b):
+def multiply(a, b):
     res = a * b
-    append_to_file(multiply.__name__, res)
+    append_to_file("multiply", res)
     return f"{a} * {b} = {res}"
-#
-# def clear(input_field):
-#     input_field = ""
 
-
-def append_to_file(func_name,res):
+def append_to_file(func_name, res):
     with open("history.txt", "a") as file:
-        file.write(f"\nWas used {func_name} and result is {res}" )
+        file.write(f"\n{func_name} used, result: {res}")
 
-
-
-print(divide(4, 0))
+if __name__ == "__main__":
+    app.run(debug=True)
